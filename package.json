@@ -2,7 +2,7 @@
     "name": "like-movies",
     "private": true,
     "version": "0.0.0",
-    "homepage": "https://like475.github.io/like-movies",
+    "homepage": "https://like475.github.io/like-movies/",
     "type": "module",
     "scripts": {
         "dev": "vite",
