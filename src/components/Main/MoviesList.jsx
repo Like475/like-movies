@@ -17,7 +17,7 @@ export default class MoviesList extends Component {
         if (query !== this.state.title || queryType !== this.state.type) {
             try {
                 const queryParams = {
-                    apikey: API_KEY,
+                    apikey: 'd0acc7c0',
                     s: query
                 };
                 if (queryType === 'movies') {
