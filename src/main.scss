@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+    @apply text-zinc-50;
+}
+
+.app {
+    * {
+        @apply transition-all duration-200;
+    }
+}
+
+.type-item {
+    @apply border-2 border-zinc-800 bg-zinc-900 px-3 py-2 leading-tight hover:bg-zinc-800 focus:bg-zinc-800 focus:outline-none peer-checked:border-lime-400 peer-checked:bg-lime-400 peer-checked:text-zinc-950;
+}
