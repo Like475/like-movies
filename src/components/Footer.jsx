@@ -8,5 +8,3 @@ export default function Footer() {
         </footer>
     );
 }
-
-// d0acc7c0

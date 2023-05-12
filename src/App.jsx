@@ -1,25 +1,22 @@
-import { Component } from 'react';
 import Header from './components/Header';
 import Main from './components/Main';
 import Footer from './components/Footer';
+import { useState } from 'react';
 
-export default class App extends Component {
-    state = {
-        title: 'matrix',
-        type: 'all'
-    };
+export default function App() {
+    const [query, setQuery] = useState('matrix');
+    const [queryType, setQueryType] = useState('all');
 
-    search = (newTitle, newType) => {
-        this.setState({ title: newTitle, type: newType });
-    };
-
-    render() {
-        return (
-            <div className='app flex min-h-screen flex-col bg-zinc-800'>
-                <Header search={this.search} />
-                <Main title={this.state.title} type={this.state.type} />
-                <Footer />
-            </div>
-        );
+    function processQuery(newQuery, newQueryType) {
+        setQuery(newQuery);
+        setQueryType(newQueryType);
     }
+
+    return (
+        <div className='app flex min-h-screen flex-col bg-zinc-800'>
+            <Header processQuery={processQuery} />
+            <Main query={query} queryType={queryType} />
+            <Footer />
+        </div>
+    );
 }

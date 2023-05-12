@@ -1,102 +1,85 @@
-import { Component } from 'react';
+import { useState } from 'react';
 
-export default class Search extends Component {
-    state = {
-        title: 'matrix',
-        type: 'all'
-    };
+export default function Search({ processQuery }) {
+    const [query, setQuery] = useState('matrix');
+    const [queryType, setQueryType] = useState('all');
 
-    handleKey = event => {
+    function processQueryOnEnter(event) {
         if (event.key === 'Enter') {
-            this.props.search(this.state.title, this.state.type);
+            processQuery(query, queryType);
         }
-    };
-
-    handleChange = event => {
-        this.setState(
-            {
-                [event.target.name]: event.target.value
-            },
-            () => {
-                if (event.target.type === 'radio') {
-                    this.props.search(this.state.title, this.state.type);
-                }
-            }
-        );
-    };
-
-    render() {
-        return (
-            <div className='flex items-stretch justify-center'>
-                <ul className='mr-3 inline-flex'>
-                    <li>
-                        <input
-                            type='radio'
-                            name='type'
-                            value='movies'
-                            id='movies'
-                            onChange={this.handleChange}
-                            checked={
-                                this.state.type === 'movies' ? true : false
-                            }
-                            className='peer appearance-none'
-                        />
-                        <label
-                            htmlFor='movies'
-                            className='type-item rounded-l-lg'
-                        >
-                            Movies
-                        </label>
-                    </li>
-                    <li>
-                        <input
-                            type='radio'
-                            name='type'
-                            value='series'
-                            id='series'
-                            onChange={this.handleChange}
-                            checked={
-                                this.state.type === 'series' ? true : false
-                            }
-                            className='peer appearance-none'
-                        />
-                        <label htmlFor='series' className='type-item'>
-                            Series
-                        </label>
-                    </li>
-                    <li>
-                        <input
-                            type='radio'
-                            name='type'
-                            value='all'
-                            id='all'
-                            onChange={this.handleChange}
-                            checked={this.state.type === 'all' ? true : false}
-                            className='peer appearance-none'
-                        />
-                        <label htmlFor='all' className='type-item rounded-r-lg'>
-                            All
-                        </label>
-                    </li>
-                </ul>
-                <input
-                    type='text'
-                    name='title'
-                    placeholder='Enter title'
-                    value={this.state.title}
-                    onChange={this.handleChange}
-                    onKeyDown={this.handleKey}
-                    className='mr-3 w-52 rounded-xl border-2 border-zinc-800 bg-zinc-900 px-4 hover:bg-zinc-800 focus:bg-zinc-800 focus:outline-none'
-                />
-                <button
-                    className='rounded-xl border-2 border-lime-400 bg-transparent px-2.5 font-semibold hover:bg-lime-400 hover:text-zinc-950'
-                    onClick={() =>
-                        this.props.search(this.state.title, this.state.type)
-                    }
-                >
-                    Search
-                </button>
-            </div>
-        );
     }
+
+    // function bindTitleInput(e) {
+    //     setQuery(e.target.value);
+    // }
+
+    function bindTypeInput(e) {
+        processQuery(query, e.target.value);
+        setQueryType(e.target.value);
+    }
+
+    return (
+        <div className='flex w-full flex-col items-center justify-center space-y-3 md:w-auto md:flex-row md:space-x-3 md:space-y-0'>
+            <ul className='inline-flex py-2'>
+                <li>
+                    <input
+                        type='radio'
+                        name='type'
+                        value='movies'
+                        id='movies'
+                        onChange={bindTypeInput}
+                        checked={queryType === 'movies' ? true : false}
+                        className='peer appearance-none'
+                    />
+                    <label htmlFor='movies' className='type-item rounded-l-lg'>
+                        Movies
+                    </label>
+                </li>
+                <li>
+                    <input
+                        type='radio'
+                        name='type'
+                        value='series'
+                        id='series'
+                        onChange={bindTypeInput}
+                        checked={queryType === 'series' ? true : false}
+                        className='peer appearance-none'
+                    />
+                    <label htmlFor='series' className='type-item'>
+                        Series
+                    </label>
+                </li>
+                <li>
+                    <input
+                        type='radio'
+                        name='type'
+                        value='all'
+                        id='all'
+                        onChange={bindTypeInput}
+                        checked={queryType === 'all' ? true : false}
+                        className='peer appearance-none'
+                    />
+                    <label htmlFor='all' className='type-item rounded-r-lg'>
+                        All
+                    </label>
+                </li>
+            </ul>
+            <input
+                type='text'
+                name='title'
+                placeholder='Enter query'
+                value={query}
+                onChange={e => setQuery(e.target.value)}
+                onKeyDown={processQueryOnEnter}
+                className='w-full rounded-xl border-2 border-zinc-800 bg-zinc-900 px-4 py-2 hover:bg-zinc-800 focus:bg-zinc-800 focus:outline-none md:w-52 md:py-0'
+            />
+            <button
+                className='w-full rounded-xl border-2 border-lime-400 bg-transparent py-2 font-semibold hover:bg-lime-400 hover:text-zinc-950 md:w-auto md:px-2.5 md:py-0'
+                onClick={() => processQuery(query, queryType)}
+            >
+                Search
+            </button>
+        </div>
+    );
 }
